@@ -1,0 +1,21 @@
+#spring.application.name=spring:
+#properties와의 차이점 : spring.datasource.url=jdbc:mysql://localhost:3306/umc7th 이런식이지 둘이 똑같음.
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/study
+    username: root
+    password: tire1347
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        hbm2ddl:
+          auto: update
+        default_batch_fetch_size: 1000
