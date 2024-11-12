@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StoreRepositoryImpl implements StoreRepositoryCustom{
+public class StoreRepositoryImpl implements StoreRepositoryCustom{//impl repository 사용하는 클래스가 하나일 때만 붙여줌
     private final JPAQueryFactory jpaQueryFactory;
     private final QStore store = QStore.store;
 

@@ -27,6 +27,8 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer phone;
+
     @Column(nullable = false, length = 20)
     private String name;
 
@@ -65,4 +67,21 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", phone=" + phone +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", specAddress='" + specAddress + '\'' +
+                ", gender=" + gender +
+                ", socialType=" + socialType +
+                ", status=" + status +
+                ", inactiveDate=" + inactiveDate +
+                ", email='" + email + '\'' +
+                ", point=" + point +
+                '}';
+    }
 }
