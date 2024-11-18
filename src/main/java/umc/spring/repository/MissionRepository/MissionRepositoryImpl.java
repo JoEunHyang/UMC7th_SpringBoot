@@ -78,8 +78,7 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom  {
                                 "(DATEDIFF({0}, NOW()) * 10000000000 + {1})", // 자리수를 맞춰 Long 조합
                                 mission.deadline, mission.id
                         ).as("cursor"),
-                        mission.deadline.as("deadline")
-                ))
+                        mission.deadline.as("deadline")))
                 .from(mission)
                 .join(store).on(mission.store.id.eq(store.id))
                 .join(region).on(store.region.id.eq(region.id))
@@ -89,17 +88,13 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom  {
                         mission.id.notIn(
                                 JPAExpressions.select(memberMission.mission.id)
                                         .from(memberMission)
-                                        .where(memberMission.member.id.eq(memberId))
-                        ),
+                                        .where(memberMission.member.id.eq(memberId))),
                         Expressions.numberTemplate(Long.class,
                                 "(DATEDIFF({0}, NOW()) * 10000000000 + {1})",
                                 mission.deadline, mission.id
-                        ).gt(cursorValue)
-                )
-                .orderBy(
-                        Expressions.numberTemplate(Long.class, "DATEDIFF({0}, NOW())", mission.deadline).asc(),
-                        mission.id.asc()
-                )
+                        ).gt(cursorValue))
+                .orderBy(Expressions.numberTemplate(Long.class, "DATEDIFF({0}, NOW())", mission.deadline).asc(),
+                        mission.id.asc())
                 .limit(15)
                 .fetch();
     }

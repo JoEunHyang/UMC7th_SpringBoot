@@ -20,9 +20,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {//impl repo
 
     @Override
     public Member dynamicQueryWithBooleanBuilder(Long memberId) {
-        BooleanBuilder predicate = new BooleanBuilder();
-
-
         return jpaQueryFactory.select(member)  // Member 객체 자체를 반환
                 .from(member)
                 .where(member.id.eq(memberId))  // id로 필터링
