@@ -40,11 +40,11 @@ public class StudyApplication {
 			storeService.findStoresByNameAndScore(name, score)
 					.forEach(System.out::println);
 
-//			mission(context);
+			MyMission(context);
 
-//			review(context);
+			review(context);
 
-//			homeMission(context);
+			homeMission(context);
 
 			myPage(context);
 		};
@@ -66,7 +66,7 @@ public class StudyApplication {
 			reviewService.addReview(title, content, score, memberId, storeId);
 	}
 
-	public void mission(ApplicationContext context) {
+	public void MyMission(ApplicationContext context) {
 		MissionQueryService missionService = context.getBean(MissionQueryService.class);
 
 		Long memberId = 1L;
@@ -91,6 +91,7 @@ public class StudyApplication {
 	public void homeMission(ApplicationContext context) {
 		HomeQueryService missionService = context.getBean(HomeQueryService.class);
 
+		String regionName = "서울";
 		Long memberId = 2L;
 		Long cursor = 0L;
 
@@ -98,7 +99,7 @@ public class StudyApplication {
 		System.out.println("memberId: " + memberId);
 		System.out.println("Cursor: " + cursor);
 
-		missionService.findMissions(1L, 10L)
+		missionService.findMissions(regionName,memberId, cursor)
 				.forEach(System.out::println);
 	}
 	public void myPage(ApplicationContext context) {

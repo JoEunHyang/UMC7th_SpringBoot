@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MissionRepositoryCustom {
     List<MissionDto> getMemberMissions(Long memberId, Long cursorValue , MissionStatus status);
-    List<MissionDto> getMissions(Long memberId, Long cursorValue);
+    List<MissionDto> getMissions(String regionName, Long memberId, Long cursorValue);
 
 }

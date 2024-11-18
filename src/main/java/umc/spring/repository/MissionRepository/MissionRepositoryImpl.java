@@ -67,9 +67,41 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom  {
     }
 
     @Override
-    public List<MissionDto> getMissions(Long memberId, Long cursorValue) {
-        return List.of();
+    public List<MissionDto> getMissions(String regionName, Long memberId, Long cursorValue) {
+        return jpaQueryFactory.select(Projections.fields(
+                        MissionDto.class,
+                        mission.id.as("missionId"),
+                        store.name.as("storeName"),
+                        mission.reward.as("missionReward"),
+                        mission.missionSpec.as("missionSpec"),
+                        Expressions.numberTemplate(Long.class,
+                                "(DATEDIFF({0}, NOW()) * 10000000000 + {1})", // 자리수를 맞춰 Long 조합
+                                mission.deadline, mission.id
+                        ).as("cursor"),
+                        mission.deadline.as("deadline")
+                ))
+                .from(mission)
+                .join(store).on(mission.store.id.eq(store.id))
+                .join(region).on(store.region.id.eq(region.id))
+                .where(
+                        region.name.eq(regionName),
+                        Expressions.numberTemplate(Long.class, "DATEDIFF({0}, NOW())", mission.deadline).goe(0),
+                        mission.id.notIn(
+                                JPAExpressions.select(memberMission.mission.id)
+                                        .from(memberMission)
+                                        .where(memberMission.member.id.eq(memberId))
+                        ),
+                        Expressions.numberTemplate(Long.class,
+                                "(DATEDIFF({0}, NOW()) * 10000000000 + {1})",
+                                mission.deadline, mission.id
+                        ).gt(cursorValue)
+                )
+                .orderBy(
+                        Expressions.numberTemplate(Long.class, "DATEDIFF({0}, NOW())", mission.deadline).asc(),
+                        mission.id.asc()
+                )
+                .limit(15)
+                .fetch();
     }
-
 
 }

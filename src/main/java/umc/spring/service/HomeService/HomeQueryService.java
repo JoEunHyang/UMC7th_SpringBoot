@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface HomeQueryService {
 
-    List<MissionDto> findMissions(Long memberId, Long cursorValue);
+    List<MissionDto> findMissions(String regionName, Long memberId, Long cursorValue);
 }
