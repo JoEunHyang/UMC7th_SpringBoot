@@ -3,8 +3,12 @@ package umc.spring.service.StoreService;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Region;
 import umc.spring.domain.Store;
+import umc.spring.repository.RegionRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
+import umc.spring.web.dto.StoreRequestDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +19,7 @@ import java.util.Optional;
 public class StoreQueryServiceImpl implements StoreQueryService{
 
     private final StoreRepository storeRepository;
+    private final RegionRepository regionRepository;
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -29,4 +34,21 @@ public class StoreQueryServiceImpl implements StoreQueryService{
 
         return filteredStores;
     }
+
+    //가게 등록
+    @Transactional
+    @Override
+    public Store saveStore(StoreRequestDTO.JoinDto request) {
+        Region region = regionRepository.findById(request.getRegionId())
+                .orElseThrow(() -> new IllegalArgumentException("Region not found for ID: "));
+
+        Store newStore = StoreConverter.toStore(request, region);
+
+        return storeRepository.save(newStore);
+    }
+    //지역 확인
+    public boolean regionExistsById(Long id) {
+        return regionRepository.existsById(id);
+    }
+
 }
