@@ -26,7 +26,7 @@ public class StudyApplication {
 	@Bean
 	public CommandLineRunner run(ApplicationContext context) {
 		return args -> {
-			StoreQueryService storeService = context.getBean(StoreQueryService.class);
+/*			StoreQueryService storeService = context.getBean(StoreQueryService.class);
 
 			// 파라미터 값 설정
 			String name = "요아정";
@@ -46,7 +46,7 @@ public class StudyApplication {
 
 			homeMission(context);
 
-			myPage(context);
+			myPage(context);*/
 		};
 	}
 
