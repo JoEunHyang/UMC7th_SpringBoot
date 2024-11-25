@@ -59,7 +59,7 @@ public class Member extends BaseEntity {
 //    @Column(nullable = false, length = 50)
     private String email;
 
-    @ColumnDefault("0")
+    @ColumnDefault("0")//안돼서 db 직접 수정해줌
     private Integer point;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

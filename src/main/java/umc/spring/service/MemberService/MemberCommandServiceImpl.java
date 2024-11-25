@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Getter //추가
 @RequiredArgsConstructor
 public class MemberCommandServiceImpl implements MemberCommandService{
 
@@ -43,5 +42,8 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         memberPreferList.forEach(memberPrefer -> {memberPrefer.setMember(newMember);});
 
         return memberRepository.save(newMember);
+    }
+    public boolean existsById(Long id) {
+        return foodCategoryRepository.existsById(id);
     }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoriesExistValidator implements ConstraintValidator<ExistCategories, List<Long>> {
 
-//    private final FoodCategoryRepository foodCategoryRepository;
     private final MemberCommandServiceImpl memberCommandService;
 
     @Override
@@ -26,7 +25,7 @@ public class CategoriesExistValidator implements ConstraintValidator<ExistCatego
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
         boolean isValid = values.stream()
-                .allMatch(value -> memberCommandService.getFoodCategoryRepository().existsById(value));
+                .allMatch(memberCommandService::existsById);//(value->memberCommandService.existsById(value));
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
