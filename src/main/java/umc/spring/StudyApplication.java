@@ -63,7 +63,7 @@ public class StudyApplication {
 			String content = "The food was great and the service was amazing!";
 
 			// 리뷰 추가
-			reviewService.addReview(title, content, score, memberId, storeId);
+//			reviewService.addReview(title, content, score, memberId, storeId);
 	}
 
 	public void MyMission(ApplicationContext context) {
