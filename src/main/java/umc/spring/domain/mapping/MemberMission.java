@@ -35,6 +35,12 @@ public class MemberMission extends BaseEntity {
                 '}';
     }
 
+    public MemberMission(MissionStatus status, Member member, Mission mission) {
+        this.status = status;
+        this.member = member;
+        this.mission = mission;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
