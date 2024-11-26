@@ -9,17 +9,17 @@ import lombok.Getter;
 public class ReviewRequestDTO {
     @Getter
     public static class AddDto{
-//        @NotBlank
+        @NotBlank
         String title;
 
         String content;
 
-//        @NotNull
-//        @DecimalMin(value = "0.0", message = "평점은 0.0 이상이어야 합니다.")
-//        @DecimalMax(value = "5.0", message = "평점은 5.0 이하이어야 합니다.")
+        @NotNull
+        @DecimalMin(value = "0.0", message = "평점은 0.0 이상이어야 합니다.")
+        @DecimalMax(value = "5.0", message = "평점은 5.0 이하이어야 합니다.")
         Float score;
 
-//        @NotNull
+        @NotNull
         Long memberId;
     }
 }

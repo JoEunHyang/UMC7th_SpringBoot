@@ -27,12 +27,6 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
 
-    /*    @Override
-    @Transactional
-    public void addReview(String title, String content, Float score, Long memberId, Long storeId) {
-        reviewRepository.insertReview(title, content, score, memberId, storeId);
-    }
-    */
     @Transactional
     @Override
     public Review saveReview(Long storeId, ReviewRequestDTO.AddDto request) {

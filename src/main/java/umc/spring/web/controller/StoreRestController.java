@@ -6,16 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
+import umc.spring.converter.MissionConverter;
 import umc.spring.converter.ReviewConverter;
 import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.service.MissionService.MissionQueryService;
 import umc.spring.service.ReviewService.ReviewQueryService;
 import umc.spring.service.StoreService.StoreQueryService;
-import umc.spring.web.dto.ReviewRequestDTO;
-import umc.spring.web.dto.ReviewResponseDTO;
-import umc.spring.web.dto.StoreRequestDTO;
-import umc.spring.web.dto.StoreResponseDTO;
+import umc.spring.web.dto.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +24,7 @@ import umc.spring.web.dto.StoreResponseDTO;
 public class StoreRestController {
     private final StoreQueryService storeQueryService;
     private final ReviewQueryService reviewQueryService;
+    private final MissionQueryService missionQueryService;
 
     @PostMapping("")
     public ApiResponse<StoreResponseDTO.JoinResultDTO> join(@RequestBody @Valid StoreRequestDTO.JoinDto request) {
@@ -31,9 +32,17 @@ public class StoreRestController {
         return ApiResponse.onSuccess(StoreConverter.joinResultDTO(store));
     }
 
+    //리뷰 추가
     @PostMapping("/{store_id}/reviews")
     public ApiResponse<ReviewResponseDTO.AddResultDTO> saveReview(@PathVariable("store_id")  Long storeId, @RequestBody @Valid ReviewRequestDTO.AddDto request) {
         Review review = reviewQueryService.saveReview(storeId, request);
         return ApiResponse.onSuccess(ReviewConverter.AddResultDTO(review));
+    }
+
+    //미션 추가
+    @PostMapping("/{store_id}/missions")
+    public ApiResponse<MissionResponseDTO.MissionAddResultDTO> addMission(@PathVariable("store_id")  Long storeId, @RequestBody @Valid MissionRequestDTO.MissionAddDto request) {
+        Mission mission = missionQueryService.addMission(storeId, request);
+        return ApiResponse.onSuccess(MissionConverter.MissionAddResultDTO(mission));
     }
 }
