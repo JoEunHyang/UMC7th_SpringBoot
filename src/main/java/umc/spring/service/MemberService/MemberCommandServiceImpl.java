@@ -36,11 +36,11 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         List<FoodCategory> foodCategoryList = foodCategoryRepository.findAllById(request.getPreferCategory());
         List<MemberPrefer> memberPreferList = MemberPreferConverter.toMemberPreferList(foodCategoryList);
 
-        memberPreferList.forEach(memberPrefer -> {memberPrefer.setMember(newMember);});
+        memberPreferList.forEach(memberPrefer -> memberPrefer.setMember(newMember));
 
         return memberRepository.save(newMember);
     }
-    public boolean existsById(Long id) {
+    public boolean foodCategoryExistsById(Long id) {
         return foodCategoryRepository.existsById(id);
     }
 }

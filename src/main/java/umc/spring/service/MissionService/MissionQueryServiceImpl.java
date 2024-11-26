@@ -44,8 +44,7 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     @Override
     public Mission addMission(Long storeId, MissionRequestDTO.MissionAddDto request) {
         // Store 확인
-        Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
+        Store store = storeRepository.findById(storeId).orElseThrow();
 
         Mission mission = MissionConverter.toMission(request, store);
 
@@ -61,14 +60,8 @@ public class MissionQueryServiceImpl implements MissionQueryService {
                 .orElseThrow(() -> new RuntimeException("Mission not found"));  // missionId로 Mission 존재 확인
 
         Member member = memberRepository.findById(9L)                //임의
-                .orElseThrow(() -> new RuntimeException("Mission not found"));  // missionId로 Mission 존재 확인
+                .orElseThrow(() -> new RuntimeException("Member not found"));  // memberId로 Member 존재 확인
 
-        // 이미 해당 memberId와 missionId에 해당하는 MemberMission이 있는지 확인
-        MemberMission existingMemberMission = memberMissionRepository.findByMemberIdAndMissionId(9L, missionId);
-        if (existingMemberMission != null) {
-            // 이미 존재하는 경우 예외 처리
-            throw new RuntimeException("Mission already exists for this member");  // 예외 메시지
-        }
         // 새로운 MemberMission 생성
         MemberMission newMemberMission = new MemberMission(MissionStatus.CHALLENGING, member, mission); // toMemberMission 변환 메서드 사용
 
@@ -76,5 +69,8 @@ public class MissionQueryServiceImpl implements MissionQueryService {
         memberMissionRepository.save(newMemberMission);
 
         return newMemberMission;
+    }
+    public boolean memberMissionExistsById(Long memberId, Long missionId) {
+        return memberMissionRepository.existsByMemberIdAndMissionId(memberId, missionId);
     }
 }
