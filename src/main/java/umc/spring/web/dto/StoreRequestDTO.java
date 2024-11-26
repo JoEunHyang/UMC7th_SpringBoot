@@ -1,13 +1,14 @@
 package umc.spring.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import umc.spring.validation.annotation.ExistRegions;
 
 
 public class StoreRequestDTO {
     @Getter
-    public static class JoinDto{
+    public static class StoreAddDto{
         @NotBlank
         String name;
 
@@ -15,7 +16,7 @@ public class StoreRequestDTO {
 
         Float score;
 
-        @ExistRegions
+        @ExistRegions(message = "Invalid Region ID provided.")
         Long regionId;
     }
 }

@@ -15,6 +15,7 @@ import umc.spring.domain.Store;
 import umc.spring.service.MissionService.MissionQueryService;
 import umc.spring.service.ReviewService.ReviewQueryService;
 import umc.spring.service.StoreService.StoreQueryService;
+import umc.spring.validation.annotation.ExistStore;
 import umc.spring.web.dto.*;
 
 @RestController
@@ -27,21 +28,21 @@ public class StoreRestController {
     private final MissionQueryService missionQueryService;
 
     @PostMapping("")
-    public ApiResponse<StoreResponseDTO.JoinResultDTO> join(@RequestBody @Valid StoreRequestDTO.JoinDto request) {
+    public ApiResponse<StoreResponseDTO.StoreAddResultDTO> join(@RequestBody @Valid StoreRequestDTO.StoreAddDto request) {
         Store store = storeQueryService.saveStore(request);
         return ApiResponse.onSuccess(StoreConverter.joinResultDTO(store));
     }
 
     //리뷰 추가
     @PostMapping("/{store_id}/reviews")
-    public ApiResponse<ReviewResponseDTO.AddResultDTO> saveReview(@PathVariable("store_id")  Long storeId, @RequestBody @Valid ReviewRequestDTO.AddDto request) {
+    public ApiResponse<ReviewResponseDTO.AddResultDTO> saveReview(@PathVariable("store_id") @ExistStore Long storeId, @RequestBody @Valid ReviewRequestDTO.AddDto request) {
         Review review = reviewQueryService.saveReview(storeId, request);
         return ApiResponse.onSuccess(ReviewConverter.AddResultDTO(review));
     }
 
     //미션 추가
     @PostMapping("/{store_id}/missions")
-    public ApiResponse<MissionResponseDTO.MissionAddResultDTO> addMission(@PathVariable("store_id")  Long storeId, @RequestBody @Valid MissionRequestDTO.MissionAddDto request) {
+    public ApiResponse<MissionResponseDTO.MissionAddResultDTO> addMission(@PathVariable("store_id") @ExistStore Long storeId, @RequestBody @Valid MissionRequestDTO.MissionAddDto request) {
         Mission mission = missionQueryService.addMission(storeId, request);
         return ApiResponse.onSuccess(MissionConverter.MissionAddResultDTO(mission));
     }

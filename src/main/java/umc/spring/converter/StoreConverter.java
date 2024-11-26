@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 public class StoreConverter {
 
-    public static StoreResponseDTO.JoinResultDTO joinResultDTO(Store store) {
-        return StoreResponseDTO.JoinResultDTO.builder()
+    public static StoreResponseDTO.StoreAddResultDTO joinResultDTO(Store store) {
+        return StoreResponseDTO.StoreAddResultDTO.builder()
                 .storeId(store.getId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }
 
-    public static Store toStore(StoreRequestDTO.JoinDto request, Region region){
+    public static Store toStore(StoreRequestDTO.StoreAddDto request, Region region){
 
         return Store.builder()
                 .address(request.getAddress())

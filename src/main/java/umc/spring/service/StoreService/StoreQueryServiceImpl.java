@@ -38,7 +38,8 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     //가게 등록
     @Transactional
     @Override
-    public Store saveStore(StoreRequestDTO.JoinDto request) {
+    public Store saveStore(StoreRequestDTO.StoreAddDto request) {
+        // Region 유효성 검사가 이미 완료된 상태
         Region region = regionRepository.findById(request.getRegionId())
                 .orElseThrow(() -> new IllegalArgumentException("Region not found for ID: "));
 
@@ -49,6 +50,9 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     //지역 확인
     public boolean regionExistsById(Long id) {
         return regionRepository.existsById(id);
+    }
+    public boolean storeExistsById(Long id) {
+        return storeRepository.existsById(id);
     }
 
 }

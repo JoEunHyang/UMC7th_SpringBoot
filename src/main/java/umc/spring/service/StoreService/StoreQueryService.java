@@ -12,5 +12,5 @@ public interface StoreQueryService {
     Optional<Store> findStore(Long id);
     List<Store> findStoresByNameAndScore(String name, Float score);
 
-    Store saveStore(StoreRequestDTO.JoinDto request);
+    Store saveStore(StoreRequestDTO.StoreAddDto request);
 }
