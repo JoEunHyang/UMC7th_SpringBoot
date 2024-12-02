@@ -73,4 +73,32 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     public boolean memberMissionExistsById(Long memberId, Long missionId) {
         return memberMissionRepository.existsByMemberIdAndMissionId(memberId, missionId);
     }
+
+    //미션 완료하기
+    @Transactional
+    @Override
+    public MemberMission completeMission(Long missionId) {
+        // Mission 확인
+        Mission mission = missionRepository.findById(missionId).get();
+//                .orElseThrow(() -> new RuntimeException("Mission not found"));
+
+        Long memberId = 9L; // 임의의 Member ID 사용
+        Member member = memberRepository.findById(memberId).get();
+//                .orElseThrow(() -> new RuntimeException("Member not found"));
+
+        // 기존 MemberMission 확인
+        MemberMission existingMemberMission = memberMissionRepository.findByMemberIdAndMissionId(memberId, missionId).get();
+//                .orElseThrow(() -> new RuntimeException("MemberMission not found"));
+
+        // 상태 업데이트
+        existingMemberMission.setStatus(MissionStatus.COMPLETE);
+
+        // 저장
+        memberMissionRepository.save(existingMemberMission);
+
+        return existingMemberMission;
+    }
+    public boolean memberMissionExistsByIdAndStatus(Long memberId, Long missionId, MissionStatus status) {
+        return memberMissionRepository.existsByMemberIdAndMissionIdAndStatus(memberId, missionId, status);
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MemberMissionConverter {
-
+    //미션 도전/완료 응답
     public static MissionResponseDTO.MissionChallengeResultDTO MissionChallengeResultDTO(MemberMission memberMission) {
         return MissionResponseDTO.MissionChallengeResultDTO.builder()
                 .memberMissionId(memberMission.getId())

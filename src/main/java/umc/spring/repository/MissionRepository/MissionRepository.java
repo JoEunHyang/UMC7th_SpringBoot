@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.domain.enums.MissionStatus;
 import umc.spring.repository.StoreRepository.StoreRepositoryCustom;
 
 public interface MissionRepository extends JpaRepository<Mission, Long>, MissionRepositoryCustom {
     Page<Mission> findAllByStore(Store store, PageRequest pageRequest);
-
 }

@@ -9,6 +9,7 @@ import umc.spring.domain.enums.MissionStatus;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

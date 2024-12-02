@@ -18,4 +18,7 @@ public interface MissionQueryService {
     Mission addMission(Long storeId, MissionRequestDTO.MissionAddDto request);
 
     MemberMission challengeMission(Long missionId);
+
+    MemberMission completeMission(Long missionId);
+
 }
