@@ -1,13 +1,20 @@
 package umc.spring.service.StoreService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Member;
 import umc.spring.domain.Region;
+import umc.spring.domain.Review;
 import umc.spring.domain.Store;
+import umc.spring.repository.MemberRepository.MemberRepository;
 import umc.spring.repository.RegionRepository;
+import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
+import umc.spring.web.dto.ReviewRequestDTO;
 import umc.spring.web.dto.StoreRequestDTO;
 
 import java.util.List;
@@ -20,6 +27,8 @@ public class StoreQueryServiceImpl implements StoreQueryService{
 
     private final StoreRepository storeRepository;
     private final RegionRepository regionRepository;
+    private final MemberRepository memberRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -55,4 +64,29 @@ public class StoreQueryServiceImpl implements StoreQueryService{
         return storeRepository.existsById(id);
     }
 
+    //리뷰 등록
+    @Transactional
+    @Override
+    public Review saveReview(Long storeId, ReviewRequestDTO.AddDto request) {
+        // Store 확인
+        Store store = storeRepository.findById(storeId).orElseThrow();// 컨트롤러에서 예외 처리함.
+
+        Member member = memberRepository.findById(9L)                //임의
+                .orElseThrow();
+
+//        Member member = memberRepository.findById(request.getMemberId())
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid member ID"));
+
+        // Review 생성 및 저장
+        Review review = StoreConverter.toReview(request, member, store);
+
+        return reviewRepository.save(review);
+    }
+    @Override
+    public Page<Review> getReviewList(Long StoreId, Integer page) {
+        Store store = storeRepository.findById(StoreId).get();
+
+        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return StorePage;
+    }
 }

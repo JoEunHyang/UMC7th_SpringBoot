@@ -10,7 +10,6 @@ import umc.spring.domain.enums.MissionStatus;
 import umc.spring.service.HomeService.HomeQueryService;
 import umc.spring.service.MissionService.MissionQueryService;
 import umc.spring.service.MypageService.MypageQueryService;
-import umc.spring.service.ReviewService.ReviewQueryService;
 import umc.spring.service.StoreService.StoreQueryService;
 
 import static umc.spring.domain.QMission.mission;
@@ -53,7 +52,7 @@ public class StudyApplication {
 
 
 	public void review(ApplicationContext context) {
-			ReviewQueryService reviewService = context.getBean(ReviewQueryService.class);
+			StoreQueryService reviewService = context.getBean(StoreQueryService.class);
 
 			// 예시 데이터
 			Float score = 4.0f;
