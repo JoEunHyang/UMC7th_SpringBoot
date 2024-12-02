@@ -56,11 +56,11 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     @Override
     public MemberMission challengeMission(Long missionId) {
         // Mission 확인
-        Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new RuntimeException("Mission not found"));  // missionId로 Mission 존재 확인
+        Mission mission = missionRepository.findById(missionId).get();
+//                .orElseThrow(() -> new RuntimeException("Mission not found"));  // missionId로 Mission 존재 확인
 
-        Member member = memberRepository.findById(9L)                //임의
-                .orElseThrow(() -> new RuntimeException("Member not found"));  // memberId로 Member 존재 확인
+        Member member = memberRepository.findById(9L).get();              //임의
+//                .orElseThrow(() -> new RuntimeException("Member not found"));  // memberId로 Member 존재 확인
 
         // 새로운 MemberMission 생성
         MemberMission newMemberMission = new MemberMission(MissionStatus.CHALLENGING, member, mission); // toMemberMission 변환 메서드 사용

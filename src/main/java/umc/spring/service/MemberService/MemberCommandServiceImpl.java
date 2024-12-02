@@ -1,8 +1,6 @@
 package umc.spring.service.MemberService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.logging.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,17 +9,18 @@ import umc.spring.converter.MemberPreferConverter;
 import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Member;
 import umc.spring.domain.Review;
-import umc.spring.domain.Store;
 import umc.spring.domain.mapping.MemberPrefer;
 import umc.spring.repository.FoodCategoryRepository;
 import umc.spring.repository.MemberRepository.MemberRepository;
 import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.web.dto.MemberRequestDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberCommandServiceImpl implements MemberCommandService{
 
     private final MemberRepository memberRepository;
@@ -51,11 +50,12 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         return foodCategoryRepository.existsById(id);
     }
 
+    @Transactional
     @Override
     public Page<Review> getReviewList(Long MemberId, Integer page) {
         Member member = memberRepository.findById(MemberId).get();
 
-        Page<Review> MemberPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
+        Page<Review> MemberPage = reviewRepository.findAllByMember(member, PageRequest.of(page - 1, 10));
         return MemberPage;
     }
 }
