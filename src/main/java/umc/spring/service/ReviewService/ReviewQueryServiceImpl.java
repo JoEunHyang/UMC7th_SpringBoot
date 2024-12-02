@@ -36,7 +36,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
         Store store = storeRepository.findById(storeId).orElseThrow();// 컨트롤러에서 예외 처리함.
 
         Member member = memberRepository.findById(9L)                //임의
-                .orElseThrow(() -> new RuntimeException("Member not found"));
+                .orElseThrow();
 
 //        Member member = memberRepository.findById(request.getMemberId())
 //                .orElseThrow(() -> new IllegalArgumentException("Invalid member ID"));
