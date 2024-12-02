@@ -6,11 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.spring.converter.StoreConverter;
-import umc.spring.domain.Member;
-import umc.spring.domain.Region;
-import umc.spring.domain.Review;
-import umc.spring.domain.Store;
+import umc.spring.domain.*;
 import umc.spring.repository.MemberRepository.MemberRepository;
+import umc.spring.repository.MissionRepository.MissionRepository;
 import umc.spring.repository.RegionRepository;
 import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
@@ -29,6 +27,7 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     private final RegionRepository regionRepository;
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -69,7 +68,7 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     @Override
     public Review saveReview(Long storeId, ReviewRequestDTO.AddDto request) {
         // Store 확인
-        Store store = storeRepository.findById(storeId).orElseThrow();// 컨트롤러에서 예외 처리함.
+        Store store = storeRepository.findById(storeId).get();// 컨트롤러에서 예외 처리함.
 
         Member member = memberRepository.findById(9L)                //임의
                 .orElseThrow();
@@ -83,12 +82,23 @@ public class StoreQueryServiceImpl implements StoreQueryService{
         return reviewRepository.save(review);
     }
 
+    //리뷰 목록
     @Transactional
     @Override
     public Page<Review> getReviewList(Long StoreId, Integer page) {
         Store store = storeRepository.findById(StoreId).get();
 
-        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page - 1, 10));
+        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page , 10));
         return StorePage;
+    }
+
+    //미션 목록
+    @Transactional
+    @Override
+    public Page<Mission> getMissionList(Long StoreId, Integer page) {
+        Store store = storeRepository.findById(StoreId).get();
+
+        Page<Mission> MissionPage = missionRepository.findAllByStore(store, PageRequest.of(page , 10));
+        return MissionPage;
     }
 }
