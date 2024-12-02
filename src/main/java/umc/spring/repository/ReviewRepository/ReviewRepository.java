@@ -11,4 +11,7 @@ import umc.spring.repository.StoreRepository.StoreRepositoryCustom;
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
     //Spring Data JPA에서 메서드 이름만으로 SQL을 만들어주는 기능
     Page<Review> findAllByStore(Store store, PageRequest pageRequest);
+
+    Page<Review> findAllByMember(Member member, PageRequest pageRequest);
+
 }
