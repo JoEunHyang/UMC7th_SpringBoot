@@ -31,7 +31,7 @@ public class MissionRestController {
     }
 
     //미션 완료하기
-    @PatchMapping("/{mission_id}/complete")
+    @PatchMapping("/{memberMissionId}/complete")
     @Operation(summary = "미션 완료 API",description = "내가 진행중인 미션을 완료하는 API입니다.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200",description = "OK, 성공"),
@@ -40,10 +40,10 @@ public class MissionRestController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
     })
     @Parameters({//프론트엔드에서 넘겨줘야 할 정보 path나 query
-            @Parameter(name = "mission_id", description = "미션 아이디, path variable 입니다!"),
+            @Parameter(name = "memberMissionId", description = "미션 아이디, path variable 입니다!"),
     })
-    public ApiResponse<MissionResponseDTO.MissionChallengeResultDTO> completeMission(@PathVariable("mission_id") @ExistChallengingMission Long missionId) {
-        MemberMission memberMission = missionQueryService.completeMission(missionId);
+    public ApiResponse<MissionResponseDTO.MissionChallengeResultDTO> completeMission(@PathVariable("memberMissionId") @ExistChallengingMission Long memberMissionId) {
+        MemberMission memberMission = missionQueryService.completeMission(memberMissionId);
         return ApiResponse.onSuccess(MemberMissionConverter.MissionChallengeResultDTO(memberMission));
     }
 

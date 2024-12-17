@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
     // MemberMission이 memberId와 missionId로 조회되는 메서드
     boolean  existsByMemberIdAndMissionId(Long memberId, Long missionId);
-    boolean existsByMemberIdAndMissionIdAndStatus(Long memberId, Long missionId, MissionStatus status);
+    boolean existsByIdAndStatus(Long memberMissionId, MissionStatus status);
 
     Page<MemberMission> findAllByMemberIdAndStatus
             (Long memberId, MissionStatus status, PageRequest pageRequest);

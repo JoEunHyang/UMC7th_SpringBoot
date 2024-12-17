@@ -26,7 +26,7 @@ public class ChallengingMissionExistValidator implements ConstraintValidator<Exi
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext context) {
         //임시로 memberId 넣어둠. 하드코딩
-        boolean isValid = missionQueryService.memberMissionExistsByIdAndStatus(9L, id, MissionStatus.CHALLENGING);//(value->memberCommandService.existsById(value));
+        boolean isValid = missionQueryService.memberMissionExistsByIdAndStatus(id, MissionStatus.CHALLENGING);//(value->memberCommandService.existsById(value));
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();

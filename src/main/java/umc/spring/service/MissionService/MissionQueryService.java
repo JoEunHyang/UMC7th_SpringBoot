@@ -19,6 +19,6 @@ public interface MissionQueryService {
 
     MemberMission challengeMission(Long missionId);
 
-    MemberMission completeMission(Long missionId);
+    MemberMission completeMission(Long memberMissionId);
 
 }
