@@ -20,6 +20,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: tire1347
+          MYSQL_DATABASE: study
+        ports:
+          - 3306:3306
+
     steps:
       - uses: actions/checkout@v3  # 저장소 코드 체크아웃
 
