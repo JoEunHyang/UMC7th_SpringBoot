@@ -39,9 +39,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle  # Gradle을 사용하여 프로젝트 빌드
+        run: ./gradlew clean build
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
+
+      - name: Gradle with warnings
+        run: ./gradlew build --warning-mode all
 
       - name: Upload build artifact  # 빌드된 아티팩트 업로드
         uses: actions/upload-artifact@v3
