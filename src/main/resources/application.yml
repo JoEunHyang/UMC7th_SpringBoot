@@ -1,5 +1,8 @@
 #spring.application.name=spring:
 #properties와의 차이점 : spring.datasource.url=jdbc:mysql://localhost:3306/umc7th 이런식이지 둘이 똑같음.
+server:
+  address: 0.0.0.0
+  port: 8080
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/study?serverTimezone=Asia/Seoul
